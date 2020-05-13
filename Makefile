@@ -1,4 +1,4 @@
-obj-m = testPCIDriver.o
+obj-m = ece_led.o
 KVERSION = $(shell uname -r)
 
 all:

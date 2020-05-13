@@ -26,7 +26,7 @@
 	 char buf[BUF_LEN];
 	 char *end;
 	 
-	 fd = open ("/dev/testPCIDriver", O_RDWR);
+	 fd = open ("/dev/ece_led", O_RDWR);
 	 
 	 if(fd < 0){
 		 printf("Cannot open device! \t");
@@ -34,50 +34,35 @@
 		 return 0;
 	 }
 	 
-	 //TURN LED ON
 	 //Read from the device
 	 ret = read(fd, buf, BUF_LEN);
 	 if(ret < 0){
 		perror("Failed to read\n");
 		return errno;
 	 }
-	 printf("Value Read: 0x%X \n", *(uint32_t*)buf);
+	 printf("Value Read: %d \n", *(int*)buf);
 	 
-	 *(uint32_t*)buf = (*(uint32_t*)buf & REG_MASK) | LED_ON;
-	 
-	 //printf("Masked Value: 0x%X \n", *(uint32_t*)buf);
-	
-	//turn on value is 1110 to 0-3
-	//turn off value is 1111 to 0-3
-	
-	 //Write to the device
-	 ret = write(fd, buf, 8);
-	 if(ret < 0){
-		 perror("Failed to write\n");
-		return errno;
-	 }
-	 
-	 //Read from the device
-	 ret = read(fd, buf, BUF_LEN);
-	 if(ret < 0){
-		perror("Failed to read\n");
-		return errno;
-	 }
-	 printf("New Value Read: 0x%X \n", *(uint32_t*)buf);
-
-
 	//SLEEP
-	sleep(2);
-	
-	//TURN OFF LED
-	 *(uint32_t*)buf = (*(uint32_t*)buf & REG_MASK) | LED_OFF;
-	
+	sleep(5);
+
+	sprintf(buf, "%d", 1);
+	printf("Writing value of: %d \n", atoi(buf));
 	 //Write to the device
-	 ret = write(fd, buf, 8);
+	 ret = write(fd, buf, strlen(buf));
 	 if(ret < 0){
 		 perror("Failed to write\n");
 		return errno;
 	 }
+	 
+	  //Read from the device
+	 ret = read(fd, buf, BUF_LEN);
+	 if(ret < 0){
+		perror("Failed to read\n");
+		return errno;
+	 }
+	 printf("Value Read: %d \n", *(int*)buf);
+	 
+	 sleep(5);
 	 
 	 //Close file
 	 if( 0 != close(fd)){
