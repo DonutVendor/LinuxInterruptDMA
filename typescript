@@ -1,0 +1,39 @@
+Script started on 2020-05-19 11:16:59-0700
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ sudo su
+[sudo] password for dmickels: 
+]0;root@dmickels-VirtualBox: /home/dmickels/Documents/ECE373_A4root@dmickels-VirtualBox:/home/dmickels/Documents/ECE373_A4# cd /sys/module/e100 0/drivers/pci:e1000
+]0;root@dmickels-VirtualBox: /sys/module/e1000/drivers/pci:e1000root@dmickels-VirtualBox:/sys/module/e1000/drivers/pci:e1000# echo -n "0000:00:0 3.0" > unbind
+]0;root@dmickels-VirtualBox: /sys/module/e1000/drivers/pci:e1000root@dmickels-VirtualBox:/sys/module/e1000/drivers/pci:e1000# exit
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ sudo insmod ece_led.ko
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ dmesg | tail - 5
+==> standard input <==
+[   68.706308] kauditd_printk_skb: 17 callbacks suppressed
+[   68.706309] audit: type=1400 audit(1589912239.788:68): apparmor="DENIED" operation="connect" profile="snap.notepad-plus-plus.notepad-plus-plus" name="/run/cups/cups.sock" pid=2504 comm="notepad-plus-pl" requested_mask="wr" denied_mask="wr" fsuid=1000 ouid=0
+[   68.971521] audit: type=1326 audit(1589912240.056:69): auid=1000 uid=1000 gid=1000 ses=2 pid=2467 comm="wineserver" exe="/snap/notepad-plus-plus/232/wine-platform/wine-stable/bin/wineserver" sig=0 arch=c000003e syscall=203 compat=0 ip=0x7f569607bf89 code=0x50000
+[   69.090264] audit: type=1326 audit(1589912240.176:70): auid=1000 uid=1000 gid=1000 ses=2 pid=2467 comm="wineserver" exe="/snap/notepad-plus-plus/232/wine-platform/wine-stable/bin/wineserver" sig=0 arch=c000003e syscall=203 compat=0 ip=0x7f569607bf89 code=0x50000
+[   70.009884] audit: type=1326 audit(1589912241.092:71): auid=1000 uid=1000 gid=1000 ses=2 pid=2467 comm="wineserver" exe="/snap/notepad-plus-plus/232/wine-platform/wine-stable/bin/wineserver" sig=0 arch=c000003e syscall=203 compat=0 ip=0x7f569607bf89 code=0x50000
+[   70.672466] audit: type=1326 audit(1589912241.756:72): auid=1000 uid=1000 gid=1000 ses=2 pid=2467 comm="wineserver" exe="/snap/notepad-plus-plus/232/wine-platform/wine-stable/bin/wineserver" sig=0 arch=c000003e syscall=203 compat=0 ip=0x7f569607bf89 code=0x50000
+[  104.548388] ece_led: module verification failed: signature and/or required key missing - tainting kernel
+[  104.549252] ece_led successfully registered
+[  104.549280] ece_led module loading... 
+[  104.549281] Allocated 1 devices at major: 241
+tail: cannot open '5' for reading: No such file or directory
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ cd user_space
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4/user_space[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4/user_space[00m$ make
+gcc -c main.c
+gcc -o main main.o
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4/user_space[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4/user_space[00m$ sudo ./main
+Value Read: 2 
+Writing value of: 1 
+Value Read: 1 
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4/user_space[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4/user_space[00m$ cd ..
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ sudo rmmod ece_led
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ dmesg | tail -5
+[  134.297787] Userspace wrote "1" to us
+[  134.297792] User got from us 1
+[  139.298929] Successfully closed ece_led!
+[  148.861395] Successfully unregistered ece_led
+[  148.861405] ece_led module unloaded!
+]0;dmickels@dmickels-VirtualBox: ~/Documents/ECE373_A4[01;32mdmickels@dmickels-VirtualBox[00m:[01;34m~/Documents/ECE373_A4[00m$ exit
+
+Script done on 2020-05-19 11:18:49-0700
